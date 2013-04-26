@@ -147,13 +147,31 @@ public class Solver {
                 }
 
                 possibleQueue = BeSmart();
+                
+                allMovesQueue = removeCopies(allMovesQueue.toArray(),possibleQueue.toArray());
 
 
             }
 
+            private Queue removeCopies(object[] p1, object[] p2)
+            {
+                int size1 = p1.Length;
+                int size2 = p2.Length;
+                int counter = 0;
+                Queue temp;
+
+                for (int i = 0; i < size1; i++)
+                {
+                    for (int j = 0; j < size2; j++)
+                    {
+                        if(
+                    }
+                }
+            }
+
 		private Queue BeSmart()
             {
-                Queue temp;
+                Queue temp = null;
                 Queue temp2;
                 
                 temp2 = allMovesQueue;
@@ -164,14 +182,38 @@ public class Solver {
                 {
                     x = ((coordinate)(temp2.remove())).getWidth();
                     y = ((coordinate)(temp2.remove())).getHeight();
+               
 
-                    if(gridBox[x+
+                    if ((checkCondition(x, y - 1, 1) || checkCondition(x + 1, y + 1, 1)) && checkCondition(x - 1, y, 0) && checkCondition(x + 1, y, 0) && checkCondition(x, y + 1, 0) && checkCondition(x + 1, y - 1, 0))
+                    {
+                        //temp += queue all SE and NW hexagons from x,y that are not in tempQueue
+                    }
+
+                    if ((checkCondition(x + 1, y - 1, 1) || checkCondition(x, y + 1, 1)) && checkCondition(x - 1, y, 0) && checkCondition(x + 1, y, 0) && checkCondition(x, y - 1, 0) && checkCondition(x + 1, y + 1, 0))
+                    {
+                        //temp += queue all SW and NE hexagons from x,y that are not in tempQueue
+                    }
+
+                    if ((checkCondition(x + 1, y, 1) || checkCondition(x - 1, y, 1)) && checkCondition(x + 1, y - 1, 0) && checkCondition(x, y + 1, 0) && checkCondition(x, y - 1, 0) && checkCondition(x + 1, y + 1, 0))
+                    {
+                        //temp += queue all W and E hexagons from x,y that are not in tempQueue
+                    }
 
                 }
 
 
                 return temp;
             }
+		
+        private boolean checkCondition(int x, int y, int value)
+        {
+            if (x >= 0 && y >= 0 && hexGrid[x][y] == value)
+                return true;
+            else if (value == 0 && ((x < 0 || y < 0) || (x > Width - 1 || y > Height - 1)))
+                return true;
+            else
+                return false;
+        }
 	}
 
 	
@@ -192,5 +234,7 @@ public class Solver {
         public int getWidth(){
             return width;
         }
+        
+        
     }
 }
